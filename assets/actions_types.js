@@ -1,0 +1,1 @@
+export const SKU_LIST = 'SKU_LIST'
