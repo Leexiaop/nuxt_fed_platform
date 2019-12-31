@@ -1,0 +1,9 @@
+#__nuxt {
+    height: 100%!important;
+}
+#__layout {
+    height: 100%!important;
+}
+.ant-layout {
+    height: 100%;
+}

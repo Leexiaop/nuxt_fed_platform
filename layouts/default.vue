@@ -1,7 +1,10 @@
 <template>
     <div class="container">
       <a-layout>
-        <a-layout-header>EBAO FED</a-layout-header>
+        <a-layout-header>
+            <a-button type="primary">我的大头贴</a-button>
+            <a-button type="primary">退出</a-button>
+        </a-layout-header>
         <a-layout>
           <a-layout-sider>
                   <a-menu
@@ -81,5 +84,10 @@ export default {
 }
 .ant-layout-content {
   padding: 24px;
+}
+.ant-layout-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>

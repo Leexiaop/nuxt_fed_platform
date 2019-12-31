@@ -1,9 +1,13 @@
 const router = require('koa-router')()
 const rp = require('request-promise')
-const list = require('./list')
+const company = require('./company')
 
 router.get('/', async (ctx) => {
-    const { code, data } = await rp({uri: 'http://www.service.com/ebao-fed-server/public/insure/list', json: true})
+    const { code, data } = await rp({
+        uri: 'http://www.service.com/ebao-fed-server/public/insure/list',
+        qs: ctx.query,
+        json: true
+    })
     if (code === 0) {
         ctx.body = {
             data: {
@@ -20,6 +24,6 @@ router.get('/', async (ctx) => {
     }
 })
 
-router.use('/list', list.routes(), list.allowedMethods())
+router.use('/company', company.routes(), company.allowedMethods())
 
 module.exports = router

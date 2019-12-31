@@ -1,4 +1,5 @@
-const feUrl = 'http://www.fed.com'
+const url = 'http://www.fed.com'
 export default {
-    fe_sku_list: feUrl + '/sku'
+    sku_list: url + '/sku',
+    company_list: url + '/sku/company'
 }
