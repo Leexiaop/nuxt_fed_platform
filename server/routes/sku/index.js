@@ -1,6 +1,7 @@
 const router = require('koa-router')()
 const rp = require('request-promise')
 const company = require('./company')
+const sku_add = require('./sku_add')
 
 router.get('/', async (ctx) => {
     const { code, data } = await rp({
@@ -25,5 +26,5 @@ router.get('/', async (ctx) => {
 })
 
 router.use('/company', company.routes(), company.allowedMethods())
-
+router.use('/sku_add', sku_add.routes(), sku_add.allowedMethods())
 module.exports = router

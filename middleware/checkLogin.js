@@ -1,6 +1,8 @@
 export default ({route, store, redirect}) => {
-    // console.log(store)
-    // if (route.name !== 'login') {
-        // return redirect('/login')
+    // let userInfo = JSON.parse(window.localStorage.getItem('userInfo'))
+    // if (!userInfo && route.name !== 'login') {
+    //     return redirect('/login')
+    // } else {
+    //     return redirect('/')
     // }
 }

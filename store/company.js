@@ -8,7 +8,6 @@ export const state =() => ({
 export const actions = {
     async [types.COMPANY_LIST] (context, params = {}) {
         const { data } = await apis.company_list(params)
-        data.data.data.unshift({id: 0, title: '全部', created_at: '2020-01-01'})
         context.commit(types.COMPANY_LIST, data.data.data)
     }
 }

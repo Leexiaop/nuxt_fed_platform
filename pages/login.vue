@@ -73,6 +73,7 @@
 </template>
 
 <script>
+import * as types from '~/assets/actions_types'
 export default {
     layout: 'login',
     data () {
@@ -86,10 +87,14 @@ export default {
     methods: {
         handleSubmit (e) {
             e.preventDefault();
-            this.form.validateFields((err, values) => {
+            this.form.validateFields(async (err, values) => {
                 if (!err) {
-                    console.log('Received values of form: ', values)
-                    this.$router.push('/')
+                    await this.$store.dispatch(`login/${types.LOGIN}`, values)
+                    let userInfo = this.$store.getters[`login/${types.LOGIN}`]
+                    if (userInfo) {
+                        localStorage.setItem('userInfo', JSON.stringify(userInfo))
+                        this.$router.push('/')
+                    }
                 }
             })
         }
