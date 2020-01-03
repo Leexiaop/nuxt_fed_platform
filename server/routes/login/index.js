@@ -1,4 +1,5 @@
 const router = require('koa-router')()
+const checkLogin = require('./check_login')
 
 router.post('/', async (ctx) => {
     ctx.body = {
@@ -12,5 +13,7 @@ router.post('/', async (ctx) => {
         }
     }
 })
+
+router.use('/check_login', checkLogin.routes(), checkLogin.allowedMethods())
 
 module.exports = router

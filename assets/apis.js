@@ -13,5 +13,8 @@ export default {
     },
     login: (params = {}) => {
         return https.default.post(url.default.login, params)
+    },
+    check_login: (params = {}) => {
+        return https.default.post(url.default.check_login, params)
     }
 }

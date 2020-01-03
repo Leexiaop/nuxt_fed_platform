@@ -74,6 +74,7 @@
 
 <script>
 import * as types from '~/assets/actions_types'
+import Cookie from 'js-cookie'
 export default {
     layout: 'login',
     data () {
@@ -92,8 +93,13 @@ export default {
                     await this.$store.dispatch(`login/${types.LOGIN}`, values)
                     let userInfo = this.$store.getters[`login/${types.LOGIN}`]
                     if (userInfo) {
-                        localStorage.setItem('userInfo', JSON.stringify(userInfo))
+                        Cookie.set('token', 'ds2341h334hk4hv4hv34g3v2g4k3v2')
                         this.$router.push('/')
+                    } else {
+                        this.$notification['error']({
+                            message: 'Error',
+                            description: '登录失败，请重新登录。。。',
+                        })
                     }
                 }
             })
