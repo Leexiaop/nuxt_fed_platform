@@ -5,11 +5,11 @@
 </template>
 
 <script>
-export default {
-
-}
+export default {}
 </script>
 
-<style>
-
+<style lang="less" scoped>
+    .container {
+        height: 100%;
+    }
 </style>

@@ -1,19 +1,16 @@
 const router = require('koa-router')()
-const checkLogin = require('./check_login')
+const rp = require('request-promise')
 
 router.post('/', async (ctx) => {
-    ctx.body = {
-        data: {
-            code: 0,
-            data: {
-                userInfo: {
-                    name: 'xiaoming'
-                }
-            }
+    ctx.body = await rp({
+        method: 'post',
+        uri: 'http://fed.qesbao.com/login',
+        json: true,
+        body: {
+            username: ctx.request.body.userName,
+            password: ctx.request.body.password,
         }
-    }
+    })
 })
-
-router.use('/check_login', checkLogin.routes(), checkLogin.allowedMethods())
 
 module.exports = router

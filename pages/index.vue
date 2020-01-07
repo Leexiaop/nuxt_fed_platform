@@ -10,7 +10,7 @@
             </a-select>
             <a-button type="primary" @click="handleBtnClick">添加</a-button>
         </div>
-        <a-table :columns="columns" :dataSource="sku_list" bordered :pagination="{pageSize: 20}">
+        <a-table :columns="columns" :dataSource="sku_list" bordered :pagination="{pageSize: 15}">
             <template slot="operation" slot-scope="text, record">
                 <a href="javascript:;" @click="handleBtnClick(record, 1)">访问</a>
                 <a href="javascript:;" @click="handleBtnClick(record, 2)">查看</a>
@@ -52,7 +52,7 @@
 </template>
 <script>
 import * as types from '~/assets/actions_types'
-
+import fun from '~/assets/utils'
 export default {
     data () {
         return {
@@ -101,7 +101,7 @@ export default {
         }
     },
     async asyncData ({store}) {
-        await store.dispatch(types.SKU_LIST)
+        // await store.dispatch(types.SKU_LIST)
     },
     methods: {
         handleSelectChange (value) {
@@ -119,7 +119,7 @@ export default {
                 case 2:
                     console.log('查看信息')
                     break
-                case 3:
+                case 3:ßß
                     this.title = '修改'
                     this.isDrawerShow = true
                     this.form = {

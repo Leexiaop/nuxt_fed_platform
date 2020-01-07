@@ -91,14 +91,14 @@ export default {
             this.form.validateFields(async (err, values) => {
                 if (!err) {
                     await this.$store.dispatch(`login/${types.LOGIN}`, values)
-                    let userInfo = this.$store.getters[`login/${types.LOGIN}`]
-                    if (userInfo) {
-                        Cookie.set('token', 'ds2341h334hk4hv4hv34g3v2g4k3v2')
+                    let fed_token = this.$store.getters[`login/${types.LOGIN}`]
+                    if (fed_token) {
+                        Cookie.set('fed_token', fed_token)
                         this.$router.push('/')
                     } else {
                         this.$notification['error']({
-                            message: 'Error',
-                            description: '登录失败，请重新登录。。。',
+                            message: '提示',
+                            description: '用户名或密码错误，登录失败，请重新登录。。。',
                         })
                     }
                 }

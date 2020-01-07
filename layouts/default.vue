@@ -47,38 +47,20 @@ export default {
                     name: '常用工具',
                     icon: 'user',
                     router: '/protocolManage'
-                },
-                // {
-                //     id: 3,
-                //     name: '协议管理',
-                //     icon: 'user',
-                //     router: ''
-                // },
-                // {
-                //     id: 4,
-                //     name: '需求管理',
-                //     icon: '',
-                //     router: ''
-                // },
-                // {
-                //     id: 5,
-                //     name: '远程部署',
-                //     icon: '',
-                //     router: ''
-                // }
+                }
             ]
         }
     },
     methods: {
         logout () {
             this.$router.push('/login')
-            Cookie.remove('token', { path: '' })
+            Cookie.remove('fed_token', { path: '' })
         }
     }
 }
 </script>
 
-<style>
+<style lang="less" scoped>
 .container {
     margin: 0 auto;
     width: 100%;
@@ -87,13 +69,15 @@ export default {
 .ant-layout-header {
   color: #fff;
   width: 100%;
-}
-.ant-layout-content {
-  padding: 24px;
-}
-.ant-layout-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.ant-layout-sider, .ant-layout-sider-dark {
+  flex: 1!important;
+  height: 100%!important;
+}
+.ant-layout-content {
+  padding: 24px;
 }
 </style>
