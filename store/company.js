@@ -7,8 +7,8 @@ export const state =() => ({
 
 export const actions = {
     async [types.COMPANY_LIST] (context, params = {}) {
-        const { data } = await apis.company_list(params)
-        context.commit(types.COMPANY_LIST, data.data.data)
+        const list = await apis.company_list(params)
+        context.commit(types.COMPANY_LIST, list)
     }
 }
 

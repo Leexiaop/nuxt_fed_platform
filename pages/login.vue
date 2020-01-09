@@ -74,7 +74,7 @@
 
 <script>
 import * as types from '~/assets/actions_types'
-import Cookie from 'js-cookie'
+import Cookies from 'js-cookie'
 export default {
     layout: 'login',
     data () {
@@ -93,7 +93,7 @@ export default {
                     await this.$store.dispatch(`login/${types.LOGIN}`, values)
                     let fed_token = this.$store.getters[`login/${types.LOGIN}`]
                     if (fed_token) {
-                        Cookie.set('fed_token', fed_token)
+                        Cookies.set('fed_token', fed_token)
                         this.$router.push('/')
                     } else {
                         this.$notification['error']({

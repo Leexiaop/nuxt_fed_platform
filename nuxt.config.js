@@ -15,9 +15,9 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-  // router: {
-  //   middleware: 'checkLogin'
-  // },
+  router: {
+    middleware: 'auth'
+  },
   /*
   ** Customize the progress-bar color
   */
@@ -33,7 +33,8 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '@/plugins/antd-ui'
+    '@/plugins/antd-ui',
+    // '@/plugins/axios'
   ],
   /*
   ** Nuxt.js dev-modules

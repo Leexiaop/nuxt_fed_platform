@@ -53,6 +53,7 @@
 <script>
 import * as types from '~/assets/actions_types'
 import fun from '~/assets/utils'
+import axios from 'axios'
 export default {
     data () {
         return {
@@ -97,11 +98,18 @@ export default {
             isDrawerShow: false,
             title: '修改',
             companyName: '',
-            form: {}
+            form: {},
+            sku_list: [],
+            company_list: []
         }
     },
     async asyncData ({store}) {
-        // await store.dispatch(types.SKU_LIST)
+        // await store.dispatch(`company/${types.COMPANY_LIST}`)
+        await store.dispatch(types.SKU_LIST)
+        // await store.dispatch(`company/${types.COMPANY_LIST}`)
+
+        // console.log(store.getters[types.SKU_LIST])
+        console.log(store.getters[`company/${types.COMPANY_LIST}`])
     },
     methods: {
         handleSelectChange (value) {
@@ -160,14 +168,14 @@ export default {
             }
         }
     },
-    computed: {
-        sku_list () {
-            return [...this.$store.getters[types.SKU_LIST]]
-        },
-        company_list () {
-            return [...this.$store.getters[`company/${types.COMPANY_LIST}`]]
-        }
-    }
+    // computed: {
+    //     sku_list () {
+    //         return [...this.$store.getters[types.SKU_LIST]]
+    //     },
+    //     company_list () {
+    //         return [...this.$store.getters[`company/${types.COMPANY_LIST}`]]
+    //     }
+    // }
 }
 </script>
 <style lang="less" scoped>

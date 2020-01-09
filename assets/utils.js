@@ -1,5 +1,6 @@
-//  函数截流
+import Cookies from 'js-cookie'
 export default {
+    //  截流函数
     throttle: (fn, interval = 500) => {
         let timer = null;
         let firstTime = true;
@@ -18,9 +19,11 @@ export default {
             }, interval)
         };
     },
+    //  客户端获取cookie
     getClientCookie: (key) => {
-        return Cookie.get(key) ? Cookie.get(key) : ''
+        return Cookies.get(key) ? Cookies.get(key) : ''
     },
+    //  服务端获取cookie
     getServerCookie: (req) => {
         return req.headers && req.headers.cookie &&req.headers.cookie.split('=')[1] || ''
     }

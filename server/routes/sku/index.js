@@ -2,28 +2,26 @@ const router = require('koa-router')()
 const rp = require('request-promise')
 const company = require('./company')
 const sku_add = require('./sku_add')
-
 router.get('/', async (ctx) => {
-    const { code, data } = await rp({
-        uri: 'http://www.service.com/ebao-fed-server/public/insure/list',
-        qs: ctx.query,
-        json: true
-    })
-    if (code === 0) {
+    let token = ctx.header.authorization
+    let obj
+    try {
+        obj = await rp({
+            uri: 'http://fed.qsebao.com/api/auth/insure/list',
+            headers: {
+                Authorization: token
+            },
+            json: true
+        })
+        console.log(obj, '****************')
         ctx.body = {
-            data: {
-                code: code,
-                data: data
-            }
+            data: []
         }
-    } else {
-        ctx.body = {
-            code: 1,
-            data: '出问题啦，快找开发小哥哥吧。。。'
-
-        }
+    } catch (error) {
+        throw new Error(error)
     }
 })
+
 
 router.use('/company', company.routes(), company.allowedMethods())
 router.use('/sku_add', sku_add.routes(), sku_add.allowedMethods())

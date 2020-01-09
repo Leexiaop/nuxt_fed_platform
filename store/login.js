@@ -8,9 +8,7 @@ export const state = () => ({
 export const actions = {
     async [types.LOGIN] (context, params) {
         const { data } = await apis.login(params)
-        if (data && data.token) {
-            context.commit(types.LOGIN, data.token)
-        }
+        context.commit(types.LOGIN, data.token)
     }
 }
 export const mutations = {

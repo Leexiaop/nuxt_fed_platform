@@ -4,11 +4,11 @@ const rp = require('request-promise')
 router.post('/', async (ctx) => {
     ctx.body = await rp({
         method: 'post',
-        uri: 'http://fed.qesbao.com/login',
+        uri: 'http://fed.qsebao.com/api/login',
         json: true,
         body: {
             username: ctx.request.body.userName,
-            password: ctx.request.body.password,
+            password: ctx.request.body.password
         }
     })
 })

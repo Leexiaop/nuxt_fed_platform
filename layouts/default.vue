@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import Cookie from 'js-cookie'
+import Cookies from 'js-cookie'
 export default {
     data () {
         return {
@@ -54,7 +54,7 @@ export default {
     methods: {
         logout () {
             this.$router.push('/login')
-            Cookie.remove('fed_token', { path: '' })
+            Cookies.remove('fed_token', { path: '' })
         }
     }
 }
