@@ -1,5 +1,5 @@
 import * as types from '~/assets/actions_types'
-import apis from '~/assets/apis'
+import urls from '~/assets/urls'
 
 export const state =() => ({
     [types.COMPANY_LIST]: []
@@ -7,7 +7,7 @@ export const state =() => ({
 
 export const actions = {
     async [types.COMPANY_LIST] (context, params = {}) {
-        const list = await apis.company_list(params)
+        const { list } = await this.$axios.$get(urls.company_list)
         context.commit(types.COMPANY_LIST, list)
     }
 }

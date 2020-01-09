@@ -3,7 +3,7 @@ const rp = require('request-promise')
 
 router.post('/', async (ctx) => {
     ctx.body = await rp({
-        method: 'post',
+        method: 'POST',
         uri: 'http://fed.qsebao.com/api/login',
         json: true,
         body: {

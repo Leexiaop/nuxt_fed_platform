@@ -1,19 +1,18 @@
 import * as types from '~/assets/actions_types'
-import apis from '~/assets/apis'
-
+import urls from '~/assets/urls'
 export const state =() => ({
     [types.SKU_LIST]: []
 })
 
 export const actions = {
     async [types.SKU_LIST] (context, params = {}) {
-        const list = await apis.sku_list(params)
+        const { list } = await this.$axios.$get(urls.sku_list)
         context.commit(types.SKU_LIST, list)
     },
-    // async [types.SKU_ADD] (context, params) {
-    //     const { data } = await apis.sku_add(params)
-    //     context.commit(types.SKU_ADD, data.data)
-    // }
+    async [types.SKU_ADD] (context, params) {
+        const { data } = await apis.sku_add(params)
+        context.commit(types.SKU_ADD, data.data)
+    }
 }
 
 export const mutations = {

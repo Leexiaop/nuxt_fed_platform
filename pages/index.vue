@@ -104,12 +104,22 @@ export default {
         }
     },
     async asyncData ({store}) {
-        // await store.dispatch(`company/${types.COMPANY_LIST}`)
+        await store.dispatch(`company/${types.COMPANY_LIST}`)
         await store.dispatch(types.SKU_LIST)
-        // await store.dispatch(`company/${types.COMPANY_LIST}`)
+        let skuList = store.getters[types.SKU_LIST]
+        this.company_list = store.getters[`company/${types.COMPANY_LIST}`]
+        // skuList.map((sku, index) => {
+        //     this.companyList.map(company => {
+        //         if (sku.cid === company.id) {
+        //             this.skuList.push(
+        //                 {
+        //                     id: index + 1,
 
-        // console.log(store.getters[types.SKU_LIST])
-        console.log(store.getters[`company/${types.COMPANY_LIST}`])
+        //                 }
+        //             )
+        //         }
+        //     })
+        // })
     },
     methods: {
         handleSelectChange (value) {

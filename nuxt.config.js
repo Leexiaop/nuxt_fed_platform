@@ -15,9 +15,6 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-  router: {
-    middleware: 'auth'
-  },
   /*
   ** Customize the progress-bar color
   */
@@ -34,7 +31,7 @@ module.exports = {
   */
   plugins: [
     '@/plugins/antd-ui',
-    // '@/plugins/axios'
+    '@/plugins/axios'
   ],
   /*
   ** Nuxt.js dev-modules

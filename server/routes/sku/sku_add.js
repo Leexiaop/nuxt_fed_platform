@@ -3,8 +3,6 @@ const router = require('koa-router')()
 const rp = require('request-promise')
 
 router.post('/', async (ctx) => {
-    // console.log(ctx.request.body)
-    // rp()
     ctx.body = {
         data: {
             code: 0,

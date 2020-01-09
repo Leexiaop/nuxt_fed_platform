@@ -3,23 +3,13 @@ const rp = require('request-promise')
 const company = require('./company')
 const sku_add = require('./sku_add')
 router.get('/', async (ctx) => {
-    let token = ctx.header.authorization
-    let obj
-    try {
-        obj = await rp({
-            uri: 'http://fed.qsebao.com/api/auth/insure/list',
-            headers: {
-                Authorization: token
-            },
-            json: true
-        })
-        console.log(obj, '****************')
-        ctx.body = {
-            data: []
+    ctx.body = await rp({
+        uri: 'http://fed.qsebao.com/api/auth/insure/list',
+        json: true,
+        headers: {
+            'Authorization': ctx.header.authorization
         }
-    } catch (error) {
-        throw new Error(error)
-    }
+    })
 })
 
 
