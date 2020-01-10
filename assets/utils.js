@@ -1,23 +1,19 @@
 import Cookies from 'js-cookie'
 export default {
     //  截流函数
-    throttle: (fn, interval = 500) => {
-        let timer = null;
-        let firstTime = true;
-        return function (...args) {
-            if (firstTime) {
-                fn.apply(this, args)
-                return firstTime = false;
-            }
+    throttle: (fn, delay = 500) => {
+        var timer
+        return function () {
+            var th = this
+            var args = arguments
             if (timer) {
-                return
-            }
-            timer = setTimeout(() => {
                 clearTimeout(timer)
+            }
+            timer = setTimeout(function () {
                 timer = null
-                fn.apply(this, args)
-            }, interval)
-        };
+                fn.apply(th, args)
+            }, delay)
+        }
     },
     //  客户端获取cookie
     getClientCookie: (key) => {

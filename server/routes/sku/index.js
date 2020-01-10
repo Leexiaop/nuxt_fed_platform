@@ -6,6 +6,7 @@ router.get('/', async (ctx) => {
     ctx.body = await rp({
         uri: 'http://fed.qsebao.com/api/auth/insure/list',
         json: true,
+        qs: ctx.query,
         headers: {
             'Authorization': ctx.header.authorization
         }

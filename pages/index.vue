@@ -2,21 +2,22 @@
     <div class="sku">
         <div class="table-operations">
             <a-input placeholder="访问链接" @change="handleInputChange" v-model="state.url"/>
-            <a-input placeholder="SKU_NAME" @change="handleInputChange" v-model="state.skuName"/>
-            <a-input placeholder="SCENE_NAME" @change="handleInputChange" v-model="state.sceneName"/>
+            <a-input placeholder="SKU_NAME" @change="handleInputChange" v-model="state.sku_name"/>
+            <a-input placeholder="SCENE_NAME" @change="handleInputChange" v-model="state.scene_name"/>
             <a-input placeholder="保险名称" @change="handleInputChange" v-model="state.title"/>
             <a-select @change="handleSelectChange" placeholder="请选择公司">
                 <a-select-option v-for="(company, index) in company_list" :value="company.id" :key="index">{{company.title}}</a-select-option>
             </a-select>
             <a-button type="primary" @click="handleBtnClick">添加</a-button>
         </div>
-        <a-table :columns="columns" :dataSource="sku_list" bordered :pagination="{pageSize: 15}">
+        <a-table :columns="columns" :dataSource="sku.list" bordered :pagination="false">
             <template slot="operation" slot-scope="text, record">
                 <a href="javascript:;" @click="handleBtnClick(record, 1)">访问</a>
                 <a href="javascript:;" @click="handleBtnClick(record, 2)">查看</a>
                 <a href="javascript:;" @click="handleBtnClick(record, 3)">修改</a>
             </template>
         </a-table>
+        <a-pagination @change="onPageChange" :defaultCurrent="3" :total="sku.total" :pageSize.sync="pageSize"/>
         <a-drawer :title="`SKU信息${title}`" placement="right" :closable="false" @close="onDrawerClose" :visible="isDrawerShow" width="700" >
             <div class="drawerContent">
                 <a-form layout="horizontal">
@@ -24,10 +25,10 @@
                         <a-input placeholder="请输入访问链接" v-model="form.url"/>
                     </a-form-item>
                     <a-form-item label="SKU_NAME">
-                        <a-input placeholder="请输入SKU_NAME" v-model="form.skuName"/>
+                        <a-input placeholder="请输入SKU_NAME" v-model="form.sku_name"/>
                     </a-form-item>
                     <a-form-item label="SCENE_NAME">
-                        <a-input placeholder="请输入SCENE_NAME" v-model="form.sceneName"/>
+                        <a-input placeholder="请输入SCENE_NAME" v-model="form.scene_name"/>
                     </a-form-item>
                     <a-form-item label="保险名称">
                         <a-input placeholder="请输入保险名称" v-model="form.title"/>
@@ -52,7 +53,7 @@
 </template>
 <script>
 import * as types from '~/assets/actions_types'
-import fun from '~/assets/utils'
+import utils from '~/assets/utils'
 import axios from 'axios'
 export default {
     data () {
@@ -90,8 +91,8 @@ export default {
             ],
             state: {
                 url: '',
-                skuName: '',
-                sceneName: '',
+                sku_name: '',
+                scene_name: '',
                 title: '',
                 company: ''
             },
@@ -99,27 +100,12 @@ export default {
             title: '修改',
             companyName: '',
             form: {},
-            sku_list: [],
-            company_list: []
+            currentPage: 1,
+            pageSize: 15
         }
     },
     async asyncData ({store}) {
-        await store.dispatch(`company/${types.COMPANY_LIST}`)
-        await store.dispatch(types.SKU_LIST)
-        let skuList = store.getters[types.SKU_LIST]
-        this.company_list = store.getters[`company/${types.COMPANY_LIST}`]
-        // skuList.map((sku, index) => {
-        //     this.companyList.map(company => {
-        //         if (sku.cid === company.id) {
-        //             this.skuList.push(
-        //                 {
-        //                     id: index + 1,
-
-        //                 }
-        //             )
-        //         }
-        //     })
-        // })
+        await store.dispatch(types.SKU_LIST, { page: 1, page_size: 15 })
     },
     methods: {
         handleSelectChange (value) {
@@ -127,7 +113,9 @@ export default {
             this.$store.dispatch(types.SKU_LIST, this.state)
         },
         handleInputChange () {
+            // utils.throttle(() => {
             this.$store.dispatch(types.SKU_LIST, this.state)
+            // }, 500)
         },
         handleBtnClick (record, key) {
             switch (key) {
@@ -163,7 +151,10 @@ export default {
             this.companyName = ''
         },
         handleDrawerSelectChange (value) {
-            this.form.company = value
+            this.form.cid = value
+        },
+        onPageChange (page, pageSize) {
+            this.$store.dispatch(types.SKU_LIST, { page: page, page_size: pageSize })
         },
         async addSku ({store}) {
             await this.$store.dispatch(types.SKU_ADD, this.form)
@@ -178,14 +169,14 @@ export default {
             }
         }
     },
-    // computed: {
-    //     sku_list () {
-    //         return [...this.$store.getters[types.SKU_LIST]]
-    //     },
-    //     company_list () {
-    //         return [...this.$store.getters[`company/${types.COMPANY_LIST}`]]
-    //     }
-    // }
+    computed: {
+        sku () {
+            return this.$store.getters[types.SKU_LIST]
+        },
+        company_list () {
+            return [...this.$store.getters[`company/${types.COMPANY_LIST}`]]
+        }
+    }
 }
 </script>
 <style lang="less" scoped>
