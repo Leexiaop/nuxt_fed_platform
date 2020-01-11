@@ -1,18 +1,19 @@
 const rp = require("request-promise")
 
-exports.moduls = (ctx, type, url) => {
+module.exports = (ctx, type, uri) => {
     type = type.toUpperCase()
     let options = {
-        uri: url,
+        uri: uri,
         json: true,
-        headers: ctx.header.authorization,
-        method: type
-    }
-    if (type === 'GET') {
-        options.qs = ctx.query
+        headers: {
+            'Authorization': ctx.header.authorization
+        }
     }
     if (type === 'POST') {
+        options.method = type
         options.body = ctx.request.body
+    } else {
+        options.qs = ctx.query
     }
     return rp(options)
 }

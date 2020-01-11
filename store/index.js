@@ -20,8 +20,8 @@ export const actions = {
         context.commit(types.SKU_LIST, sku)
     },
     async [types.SKU_ADD] (context, params) {
-        const { data } = await this.$axios.$post(urls.sku_add, params)
-        context.commit(types.SKU_ADD, data.data)
+        const data = await this.$axios.$post(urls.sku_add, params)
+        context.commit(types.SKU_ADD, data)
     }
 }
 

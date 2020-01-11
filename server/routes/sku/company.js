@@ -1,13 +1,8 @@
 const company = require('koa-router')()
-const rp = require('request-promise')
+const request =  require('../../api/request')
+const uri = require('../../api/uri')
 company.get('/', async (ctx) => {
-    ctx.body = await rp({
-        uri: 'http://fed.qsebao.com/api/auth/company/list',
-        json: true,
-        headers: {
-            'Authorization': ctx.header.authorization
-        }
-    })
+    ctx.body = await request(ctx, 'GET', uri.company_list)
 })
 
 module.exports = company

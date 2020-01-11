@@ -10,7 +10,7 @@ export default ({ $axios, redirect, req }) => {
     }
     $axios.setHeader('Authorization', token)
     $axios.onResponse(response => {
-        const { code } = response.data
+        const { code, msg } = response.data
         if (code === 401) {
             notification.error({
                 message: '提示',
@@ -19,6 +19,10 @@ export default ({ $axios, redirect, req }) => {
             redirect('/login')
             return
         }
+        notification.success({
+            message: 'Success',
+            description: msg
+        })
         return response.data
     })
 }

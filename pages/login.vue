@@ -10,7 +10,7 @@
                 <a-form-item>
                 <a-input
                     v-decorator="[
-                    'userName',
+                    'username',
                     { rules: [{ required: true, message: 'Please input your username!' }] }
                     ]"
                     placeholder="Username"

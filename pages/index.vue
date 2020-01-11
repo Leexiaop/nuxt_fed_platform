@@ -60,7 +60,7 @@ export default {
         return {
             columns: [
                 {
-                    title: 'Id',
+                    title: '序号',
                     dataIndex: 'key'
                 },
                 {
@@ -158,14 +158,9 @@ export default {
         },
         async addSku ({store}) {
             await this.$store.dispatch(types.SKU_ADD, this.form)
-            if (this.$store.getters[types.SKU_ADD] === '添加成功') {
+            if (!this.$store.getters[types.SKU_ADD]) {
                 this.isDrawerShow = false
                 this.$store.dispatch(types.SKU_LIST)
-            } else {
-                this.$notification['error']({
-                    message: 'Error',
-                    description: '提交失败，请迅速联系程序猿。。。',
-                })
             }
         }
     },

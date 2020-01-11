@@ -1,14 +1,9 @@
 const router = require('koa-router')()
-const rp = require('request-promise')
+const request = require('../../api/request')
+const uri = require('../../api/uri')
+
 router.post('/', async (ctx) => {
-    ctx.body = await rp({
-        uri: 'http://fed.qsebao.com/api/auth/insure/add',
-        json: true,
-        headers: {
-            'Authorization': ctx.header.authorization
-        },
-        body: ctx.request.body
-    })
+    ctx.body = await request(ctx, 'POST', uri.sku_add)
 })
 
 module.exports = router
