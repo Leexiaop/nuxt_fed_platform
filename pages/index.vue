@@ -5,16 +5,18 @@
             <a-input placeholder="SKU_NAME" @change="handleInputChange" v-model="state.sku_name"/>
             <a-input placeholder="SCENE_NAME" @change="handleInputChange" v-model="state.scene_name"/>
             <a-input placeholder="保险名称" @change="handleInputChange" v-model="state.title"/>
-            <a-select @change="handleSelectChange" placeholder="请选择公司">
+            <a-select @change="handleSelectChange" placeholder="请选择保险公司">
                 <a-select-option v-for="(company, index) in company_list" :value="company.id" :key="index">{{company.title}}</a-select-option>
             </a-select>
             <a-button type="primary" @click="handleBtnClick">添加</a-button>
         </div>
         <a-table :columns="columns" :dataSource="sku.list" bordered :pagination="false">
             <template slot="operation" slot-scope="text, record">
-                <a href="javascript:;" @click="handleBtnClick(record, 1)">访问</a>
-                <a href="javascript:;" @click="handleBtnClick(record, 2)">查看</a>
-                <a href="javascript:;" @click="handleBtnClick(record, 3)">修改</a>
+                <a-button @click="handleBtnClick(record, 1)">访问</a-button>
+                <a-button type="primary" @click="handleBtnClick(record, 3)">修改</a-button>
+                <a-popconfirm title="确定要删除本条SKU吗？" @confirm="handleBtnClick(record, 2)" okText="Yes" cancelText="No">
+                    <a-button type="danger">删除</a-button>
+                </a-popconfirm>
             </template>
         </a-table>
         <a-pagination @change="onPageChange" :defaultCurrent="3" :total="sku.total" :pageSize.sync="pageSize"/>
@@ -34,7 +36,7 @@
                         <a-input placeholder="请输入保险名称" v-model="form.title"/>
                     </a-form-item>
                      <a-form-item label="保险公司">
-                        <a-select v-model="companyName" @change="handleDrawerSelectChange" placeholder="请选择公司">
+                        <a-select defaultValue="请选择保险公司" v-model="form.insure_name" @change="handleDrawerSelectChange" placeholder="请选择保险公司">
                             <a-select-option v-for="(company, index) in company_list" :value="company.id" :key="index">{{company.title}}</a-select-option>
                         </a-select>
                     </a-form-item>
@@ -98,15 +100,17 @@ export default {
             },
             isDrawerShow: false,
             title: '修改',
-            companyName: '',
             form: {},
             currentPage: 1,
             pageSize: 15
         }
     },
-    async asyncData ({store}) {
-        await store.dispatch(types.SKU_LIST, { page: 1, page_size: 15 })
+    async mounted () {
+       await this.$store.dispatch(types.SKU_LIST, { page: this.currentPage, page_size: this.pageSize })
     },
+    // async asyncData ({store}) {
+    //     await store.dispatch(types.SKU_LIST, { page: 1, page_size: 15 })
+    // },
     methods: {
         handleSelectChange (value) {
             this.state.company = this.company_list.find(company => company.id === value).id
@@ -117,27 +121,31 @@ export default {
             this.$store.dispatch(types.SKU_LIST, this.state)
             // }, 500)
         },
-        handleBtnClick (record, key) {
+        async handleBtnClick (record, key) {
             switch (key) {
                 case 1:
                     window.open(record.url, '_blank', true)
                     break
                 case 2:
-                    console.log('查看信息')
+                    await this.$store.dispatch(types.SKU_DELETE, { id: record.id })
+                    if (!this.$store.getters[types.SKU_DELETE]) {
+                        this.isDrawerShow = false
+                        this.$store.dispatch(types.SKU_LIST, { page: this.currentPage, page_size: this.pageSize })
+                    }
                     break
-                case 3:ßß
+                case 3:
                     this.title = '修改'
                     this.isDrawerShow = true
                     this.form = {
                         id: record.id,
                         url: record.url,
-                        skuName: record.sku_name,
-                        sceneName: record.scene_name,
+                        sku_name: record.sku_name,
+                        scene_name: record.scene_name,
                         company: record.cid,
                         title: record.title,
-                        config: record.config
+                        config: record.config,
+                        insure_name: record.insure_name
                     }
-                    this.companyName = record.insure_name
                     break
                 default:
                     this.isDrawerShow = true
@@ -148,7 +156,6 @@ export default {
         onDrawerClose () {
             this.isDrawerShow = false
             this.form = {}
-            this.companyName = ''
         },
         handleDrawerSelectChange (value) {
             this.form.cid = value
@@ -156,11 +163,24 @@ export default {
         onPageChange (page, pageSize) {
             this.$store.dispatch(types.SKU_LIST, { page: page, page_size: pageSize })
         },
-        async addSku ({store}) {
-            await this.$store.dispatch(types.SKU_ADD, this.form)
+        async addSku () {
+            let param = {
+                url: this.form.url,
+                sku_name: this.form.sku_name,
+                scene_name: this.form.scene_name,
+                config: this.form.config,
+                title: this.form.title,
+                cid: this.form.company
+            }
+            if (this.form.id) {
+                param.id = this.form.id
+                await this.$store.dispatch(types.SKU_UPDATE, param)
+            } else {
+                await this.$store.dispatch(types.SKU_ADD, param)
+            }
             if (!this.$store.getters[types.SKU_ADD]) {
                 this.isDrawerShow = false
-                this.$store.dispatch(types.SKU_LIST)
+                this.$store.dispatch(types.SKU_LIST, { page: this.currentPage, page_size: this.pageSize })
             }
         }
     },
