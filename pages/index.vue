@@ -69,6 +69,7 @@ import * as types from '~/assets/actions_types'
 import utils from '~/assets/utils'
 import axios from 'axios'
 export default {
+    layout: 'content',
     data () {
         return {
             columns: [

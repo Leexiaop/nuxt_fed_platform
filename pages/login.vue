@@ -76,7 +76,6 @@
 import * as types from '~/assets/actions_types'
 import Cookies from 'js-cookie'
 export default {
-    layout: 'login',
     data () {
         return {
             form: this.$form.createForm(this)
