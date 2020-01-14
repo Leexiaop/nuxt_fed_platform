@@ -11,3 +11,8 @@
     width: 100%!important;
     display: flex;
 }
+.ant-layout-content {
+    position: absolute;
+    right: 0;
+    width: calc(100% - 200px);
+}

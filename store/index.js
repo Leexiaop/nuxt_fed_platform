@@ -27,7 +27,7 @@ export const actions = {
     },
     async [types.SKU_UPDATE] (context, params) {
         const data = await this.$axios.$put(urls.sku_update, params)
-        context.commit(type.SKU_UPDATE, data)
+        context.commit(types.SKU_UPDATE, data)
     },
     async [types.SKU_DELETE] (context, params) {
         const data = await this.$axios.$delete(urls.sku_delete, { params: params })

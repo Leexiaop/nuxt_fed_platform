@@ -30,16 +30,18 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '@/plugins/axios',
-    '@/plugins/antd-ui'
-    // {
-    //   src: '@/plugins/antd-ui',
-    //   ssr: true
-    // },
-    // {
-    //   src:  '@/plugins/axios',
-    //   ssr: true
-    // }
+    {
+      src:'@/plugins/axios',
+      ssr: true
+    },
+    {
+      src: '@/plugins/antd-ui',
+      ssr: true
+    },
+    {
+      src: '@/plugins/json-viewer',
+      ssr: false
+    }
   ],
   /*
   ** Nuxt.js dev-modules

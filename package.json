@@ -27,7 +27,8 @@
     "less-loader": "^5.0.0",
     "nuxt": "^2.0.0",
     "request": "^2.88.0",
-    "request-promise": "^4.2.5"
+    "request-promise": "^4.2.5",
+    "vue-json-viewer": "^2.2.8"
   },
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.27",

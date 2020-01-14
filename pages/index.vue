@@ -17,6 +17,7 @@
                 <a-popconfirm title="确定要删除本条SKU吗？" @confirm="handleBtnClick(record, 2)" okText="Yes" cancelText="No">
                     <a-button type="danger">删除</a-button>
                 </a-popconfirm>
+                <a-button type="primary" @click="handleBtnClick(record, 4)">查看</a-button>
             </template>
         </a-table>
         <a-pagination @change="onPageChange" :defaultCurrent="3" :total="sku.total" :pageSize.sync="pageSize"/>
@@ -51,6 +52,16 @@
                 </a-form>
             </div>
         </a-drawer>
+        <a-modal title="JSON数据对比" width="80%" v-model="isModelShow" @ok="addSku" okText="保存" cancelText="下载" @cancel="downModalData">
+            <div class="content">
+                <div class="content-left">
+                    <a-textarea placeholder="Basic usage" :rows="45" v-model="form.config"/>
+                </div>
+                <div class="content-right">
+                    <json-viewer :value="form.config" :expand-depth="5" copyable sort></json-viewer>
+                </div>
+            </div>
+        </a-modal>
     </div>
 </template>
 <script>
@@ -99,18 +110,17 @@ export default {
                 company: ''
             },
             isDrawerShow: false,
+            isModelShow: false,
             title: '修改',
             form: {},
             currentPage: 1,
-            pageSize: 15
+            pageSize: 15,
+            jsonConfig: {}
         }
     },
     async mounted () {
-       await this.$store.dispatch(types.SKU_LIST, { page: this.currentPage, page_size: this.pageSize })
+        await this.$store.dispatch(types.SKU_LIST, { page: this.currentPage, page_size: this.pageSize })
     },
-    // async asyncData ({store}) {
-    //     await store.dispatch(types.SKU_LIST, { page: 1, page_size: 15 })
-    // },
     methods: {
         handleSelectChange (value) {
             this.state.company = this.company_list.find(company => company.id === value).id
@@ -145,6 +155,18 @@ export default {
                         title: record.title,
                         config: record.config,
                         insure_name: record.insure_name
+                    }
+                    break
+                case 4:
+                    this.isModelShow = true
+                    this.form = {
+                        id: record.id,
+                        url: record.url,
+                        sku_name: record.sku_name,
+                        scene_name: record.scene_name,
+                        config: record.config,
+                        title: record.title,
+                        company: record.cid
                     }
                     break
                 default:
@@ -182,6 +204,25 @@ export default {
                 this.isDrawerShow = false
                 this.$store.dispatch(types.SKU_LIST, { page: this.currentPage, page_size: this.pageSize })
             }
+        },
+        downModalData () {
+            if(!this.form.config) {
+                this.$notification.warning({
+                    message: '提示',
+                    description: '数据为空，不能下载文件。。。'
+                })
+                alert('保存的数据为空');
+                return
+            }
+            let text = '//sku_name=' + this.form.sku_name + '&scene_name=' + this.form.scene_name + '\n' + this.form.config
+            let blob = new Blob([text], {type: 'text/json'}),
+            e = document.createEvent('MouseEvents'),
+            a = document.createElement('a')
+            a.download = `${this.form.sku_name}-${this.form.scene_name}.json`
+            a.href = window.URL.createObjectURL(blob)
+            a.dataset.downloadurl = ['text/json', a.download, a.href].join(':')
+            e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
+            a.dispatchEvent(e)
         }
     },
     computed: {
@@ -199,6 +240,16 @@ export default {
     margin-bottom: 24px;
     input, .ant-select {
         width: 15%;
+    }
+}
+div.content {
+    display: flex;
+    div.content-left, div.content-right{
+        width: 50%;
+        height: 955px;
+        border-radius: 4px;
+        border: 1px solid #d9d9d9;
+        overflow: scroll;
     }
 }
 </style>
