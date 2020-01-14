@@ -24,6 +24,7 @@
                 </a-form-item>
                 <a-form-item>
                 <a-input
+                    autocomplete="password"
                     v-decorator="[
                     'password',
                     { rules: [{ required: true, message: 'Please input your Password!' }] }
@@ -90,9 +91,8 @@ export default {
             this.form.validateFields(async (err, values) => {
                 if (!err) {
                     await this.$store.dispatch(`login/${types.LOGIN}`, values)
-                    let fed_token = this.$store.getters[`login/${types.LOGIN}`]
+                    let fed_token = await this.$store.getters[`login/${types.LOGIN}`]
                     if (fed_token) {
-                        Cookies.set('fed_token', fed_token)
                         this.$router.push('/')
                     } else {
                         this.$notification['error']({

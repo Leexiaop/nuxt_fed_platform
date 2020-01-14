@@ -1,5 +1,6 @@
 import * as types from '~/assets/actions_types'
 import urls from '~/assets/urls'
+import Cookies from 'js-cookie'
 export const state = () => ({
     [types.LOGIN]: ''
 })
@@ -7,6 +8,7 @@ export const state = () => ({
 export const actions = {
     async [types.LOGIN] (context, params) {
         const data = await this.$axios.$post(urls.login, params)
+        Cookies.set('fed_token', data.token)                               
         context.commit(types.LOGIN, data.token)
     }
 }

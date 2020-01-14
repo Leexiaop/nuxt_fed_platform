@@ -8,6 +8,7 @@ export const state =() => ({
 export const actions = {
     async [types.COMPANY_LIST] (context, params = {}) {
         const { list } = await this.$axios.$get(urls.company_list)
+        console.log(list)
         context.commit(types.COMPANY_LIST, list)
     }
 }

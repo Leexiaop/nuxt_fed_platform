@@ -122,6 +122,9 @@ export default {
     async mounted () {
         await this.$store.dispatch(types.SKU_LIST, { page: this.currentPage, page_size: this.pageSize })
     },
+    // async asyncData ({store}) {
+    //     await store.dispatch(types.SKU_LIST, { page: 1, page_size: 15 })
+    // },
     methods: {
         handleSelectChange (value) {
             this.state.company = this.company_list.find(company => company.id === value).id
