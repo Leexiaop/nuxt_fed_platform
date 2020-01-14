@@ -74,8 +74,8 @@ export default {
   align-items: center;
 }
 .ant-layout-sider, .ant-layout-sider-dark {
-  height: 100% !important;
   flex: none !important;
+  min-height: 100% !important;
 }
 .ant-layout-content {
   padding: 24px;
