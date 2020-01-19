@@ -113,7 +113,6 @@ export default {
     height: 100%;
     // background: url('/bg.jpeg') no-repeat;
     background-size: 100% 100%;
-    position: relative;
     div.content {
         width: 300px;
         position: absolute;

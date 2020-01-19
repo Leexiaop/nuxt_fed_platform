@@ -8,9 +8,6 @@ export default ({route, $axios, redirect, req }) => {
     if (process.server) {
         token = utils.getServerCookie(req)
     }
-    if (route.path !== '/login') {
-        $axios.setHeader('Authorization', 'fed_token ' + token)
-    }
     if (!token && route.path !== '/login') {
         redirect('/login')
         return

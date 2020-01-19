@@ -119,7 +119,7 @@ export default {
             jsonConfig: {}
         }
     },
-    async mounted () {
+    async created () {
         await this.$store.dispatch(types.SKU_LIST, { page: this.currentPage, page_size: this.pageSize })
     },
     // async asyncData ({store}) {
