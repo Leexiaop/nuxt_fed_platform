@@ -126,7 +126,7 @@ export default {
     },
     methods: {
         handleSelectChange (value) {
-            this.state.company = this.company_list.find(company => company.id === value).id
+            this.state.company = this.$store.getters[`company/${types.COMPANY_LIST}`].find(company => company.id === value).id
             this.$store.dispatch(types.SKU_LIST, this.state)
         },
         handleInputChange () {

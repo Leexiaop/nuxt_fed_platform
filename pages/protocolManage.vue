@@ -1,11 +1,18 @@
 <template>
     <div class="protocol">
-        <div>ssssss</div>
+        <div>{{data}}</div>
     </div>
 </template>
 <script>
-
-export default {}
+export default {
+    layout: 'content',
+    async asyncData ({store}) {
+        return {
+            data: '还没有程序猿开发我呢。。。。呜呜呜呜呜呜。。。。。。。'
+        }
+    },
+    
+}
 </script>
 <style lang="less" scoped>
 

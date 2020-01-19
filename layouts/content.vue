@@ -2,8 +2,7 @@
     <div class="container">
       <a-layout>
         <a-layout-header>
-            <a-button type="primary">我的大头贴</a-button>
-            <a-button type="primary" @click="logout">退出</a-button>
+            <Nav />
         </a-layout-header>
         <a-layout>
           <a-layout-sider>
@@ -31,7 +30,11 @@
 
 <script>
 import Cookies from 'js-cookie'
+import Nav from '~/components/Nav'
 export default {
+    components: {
+        Nav
+    },
     data () {
         return {
             collapsed: false,
@@ -49,12 +52,6 @@ export default {
                     router: '/protocolManage'
                 }
             ]
-        }
-    },
-    methods: {
-        logout () {
-            this.$router.push('/login')
-            Cookies.remove('fed_token', { path: '' })
         }
     }
 }
