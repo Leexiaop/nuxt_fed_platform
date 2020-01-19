@@ -6,7 +6,7 @@
             <a-input placeholder="SCENE_NAME" @change="handleInputChange" v-model="state.scene_name"/>
             <a-input placeholder="保险名称" @change="handleInputChange" v-model="state.title"/>
             <a-select @change="handleSelectChange" placeholder="请选择保险公司">
-                <a-select-option v-for="(company, index) in company_list" :value="company.id" :key="index">{{company.title}}</a-select-option>
+                <a-select-option v-for="(company, index) in $store.getters[`company/${actionTypes.COMPANY_LIST}`]" :value="company.id" :key="index">{{company.title}}</a-select-option>
             </a-select>
             <a-button type="primary" @click="handleBtnClick">添加</a-button>
         </div>
@@ -38,7 +38,7 @@
                     </a-form-item>
                      <a-form-item label="保险公司">
                         <a-select defaultValue="请选择保险公司" v-model="form.insure_name" @change="handleDrawerSelectChange" placeholder="请选择保险公司">
-                            <a-select-option v-for="(company, index) in company_list" :value="company.id" :key="index">{{company.title}}</a-select-option>
+                            <a-select-option v-for="(company, index) in $store.getters[`company/${actionTypes.COMPANY_LIST}`]" :value="company.id" :key="index">{{company.title}}</a-select-option>
                         </a-select>
                     </a-form-item>
                     <a-form-item label="配置信息">
@@ -70,6 +70,7 @@ import utils from '~/assets/utils'
 import axios from 'axios'
 export default {
     layout: 'content',
+    middleware: 'getCompanyList',
     data () {
         return {
             columns: [
@@ -116,15 +117,13 @@ export default {
             form: {},
             currentPage: 1,
             pageSize: 15,
-            jsonConfig: {}
+            jsonConfig: {},
+            actionTypes: types
         }
     },
-    async created () {
-        await this.$store.dispatch(types.SKU_LIST, { page: this.currentPage, page_size: this.pageSize })
+    async asyncData ({store}) {
+        await store.dispatch(types.SKU_LIST, { page: 1, page_size: 15 })
     },
-    // async asyncData ({store}) {
-    //     await store.dispatch(types.SKU_LIST, { page: 1, page_size: 15 })
-    // },
     methods: {
         handleSelectChange (value) {
             this.state.company = this.company_list.find(company => company.id === value).id
@@ -232,9 +231,6 @@ export default {
     computed: {
         sku () {
             return this.$store.getters[types.SKU_LIST]
-        },
-        company_list () {
-            return [...this.$store.getters[`company/${types.COMPANY_LIST}`]]
         }
     }
 }

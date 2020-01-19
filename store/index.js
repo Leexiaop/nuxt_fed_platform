@@ -6,7 +6,6 @@ export const state =() => ({
 
 export const actions = {
     async [types.SKU_LIST] (context, params = {}) {
-        await context.dispatch(`company/${types.COMPANY_LIST}`)
         let sku = await this.$axios.$get(urls.sku_list, { params: params})
         const list = await context.getters[`company/${types.COMPANY_LIST}`]
         for (let i = 0; i < sku.list.length; i++) {
