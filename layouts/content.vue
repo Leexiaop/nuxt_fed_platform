@@ -66,6 +66,9 @@ export default {
     width: 100%;
     height: 100%;
 }
+.ant-layout {
+  height: 100%;
+}
 .ant-layout-header {
   color: #fff;
   width: 100%;
