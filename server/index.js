@@ -36,4 +36,5 @@ async function start () {
     badge: true
   })
 }
+
 start()
