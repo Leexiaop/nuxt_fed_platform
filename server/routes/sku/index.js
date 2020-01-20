@@ -7,10 +7,9 @@ const sku_delete = require('./sku_delete')
 const request = require('../../api/request')
 const uri = require('../../api/uri')
 
-router.get('/', async (ctx) => {
+router.get('/', async ctx => {
     ctx.body = await request(ctx, 'GET', uri.sku_list)
 })
-
 
 router.use('/company', company.routes(), company.allowedMethods())
 router.use('/sku_add', sku_add.routes(), sku_add.allowedMethods())

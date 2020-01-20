@@ -1,6 +1,6 @@
 import { notification } from 'ant-design-vue'
 import utils from '~/assets/utils'
-export default ({route, $axios, redirect, req }) => {
+export default ({ route, $axios, redirect, req }) => {
     let token
     if (process.client) {
         token = utils.getClientCookie('fed_token')

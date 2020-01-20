@@ -1,4 +1,4 @@
-const rp = require("request-promise")
+const rp = require('request-promise')
 
 module.exports = (ctx, type, uri) => {
     let reg = /(?<=fed_token=).[^;]+/
