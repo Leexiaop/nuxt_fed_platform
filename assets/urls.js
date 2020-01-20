@@ -1,4 +1,4 @@
-const url = 'http://fed.qsebao.com'
+const url = 'https://fed.qsebao.com'
 export default {
     login: url + '/user',
     sku_list: url + '/sku',
