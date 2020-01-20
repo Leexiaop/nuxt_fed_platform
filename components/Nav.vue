@@ -7,7 +7,10 @@
       >
       <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ userInfo.name }}</div>
     </div>
-    <a-button type="primary">
+    <a-button
+      type="primary"
+      @click="logout"
+    >
       退出
     </a-button>
   </div>
