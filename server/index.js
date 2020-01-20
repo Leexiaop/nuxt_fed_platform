@@ -30,12 +30,10 @@ async function start () {
     ctx.req.ctx = ctx // This might be useful later on, e.g. in nuxtServerInit or with nuxt-stash
     nuxt.render(ctx.req, ctx.res)
   })
-
   app.listen(port, host)
   consola.ready({
     message: `Server listening on http://${host}:${port}`,
     badge: true
   })
 }
-
 start()
