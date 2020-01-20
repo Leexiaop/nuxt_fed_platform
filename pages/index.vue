@@ -191,7 +191,7 @@
 import * as types from '~/assets/actions_types'
 export default {
     layout: 'content',
-    // middleware: 'getCompanyList',
+    middleware: 'getCompanyList',
     async asyncData({ store }) {
         await store.dispatch(types.SKU_LIST, { page: 1, page_size: 15 })
     },
