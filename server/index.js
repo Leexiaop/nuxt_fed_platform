@@ -12,7 +12,6 @@ config.dev = app.env !== 'production'
 async function start () {
   // Instantiate nuxt.js
   const nuxt = new Nuxt(config)
-
   const host = '127.0.0.1'
   const port = 8092
 
